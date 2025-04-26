@@ -29,7 +29,9 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
@@ -92,11 +94,14 @@
                 "glob": "**/*",
                 "input": "public"
               },
-              "src/assets/img"
+              "src/assets/img",
+              "node_modules/bootstrap-icons/font"
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
