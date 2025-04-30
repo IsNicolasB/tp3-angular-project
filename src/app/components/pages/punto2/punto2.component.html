@@ -1,9 +1,9 @@
 <div class="container pt-5 mt-4">
 
     <!-- Botón para mostrar el carrito -->
-    <button class="btn btn-success position-fixed top-0 end-0 m-4 shadow animate__animated" [class.animate__bounce]="animandoCarrito"
+    <button class="btn btn-success position-fixed top-10 end-0 m-4 shadow animate__animated" [class.animate__bounce]="animatingCart"
         style="z-index: 1080;" data-bs-toggle="modal" data-bs-target="#carritoModal">
-        <i class="bi bi-cart"></i> ({{ carrito.length }})
+        <i class="bi bi-cart"></i> ({{ cart.length }})
     </button>
 
     <div class="row">
@@ -15,10 +15,16 @@
                     <p class="card-text mb-0">{{ producto.descripcion }}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <p class="card-text fs-3 m-2">${{ producto.precio }}</p>
-                        <button class="btn btn-primary" (click)="agregarAlCarrito(producto)"
-                            [disabled]="carrito.includes(producto)">
-                            Agregar al carrito
-                        </button>
+                        @if(!cart.includes(producto)) {
+                            <button class="btn btn-primary" (click)="addProduct(producto)">
+                                <i class="bi bi-cart-plus-fill"></i> Agregar
+                            </button>
+                        }
+                        @else{
+                            <button class="btn btn-danger" (click)="deleteProduct(producto.id)">
+                                <i class="bi bi-cart-dash-fill"></i> Quitar
+                            </button>
+                        }
                     </div>
                 </div>
             </div>
@@ -27,19 +33,19 @@
 
     <!-- Modal Bootstrap -->
     <div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="carritoModalLabel">Carrito de Compras</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    <ul class="list-group mb-3" *ngIf="carrito.length > 0; else vacio">
+                    <ul class="list-group mb-3" *ngIf="cart.length > 0; else vacio">
                         <li class="list-group-item d-flex justify-content-between align-items-center"
-                            *ngFor="let prod of carrito">
+                            *ngFor="let prod of cart">
                             <img [src]="prod.img" [alt]="prod.nombre" style="max-width: 50px; min-width: 50px">
-                            {{ prod.nombre }}
-                            <span>${{ prod.precio }}</span>
+                            <p class="ms-5">{{ prod.nombre }}</p>
+                            <span class="ms-3">${{ prod.precio }}</span>
                         </li>
                     </ul>
                     <ng-template #vacio>
@@ -49,9 +55,8 @@
                         <strong>Total: ${{ total }}</strong>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" [disabled]="carrito.length === 0">Check Out</button>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-success" [disabled]="cart.length === 0">Comprar</button>
                 </div>
             </div>
         </div>
