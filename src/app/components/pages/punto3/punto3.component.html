@@ -1,1 +1,72 @@
-<p>punto3 works!</p>
+<div class="container pt-5 mt-4" style="min-height: 90vh;">
+    <button class="btn-transparent p-0 position-absolute top-10" (mouseenter)="hover = true"
+        (mouseleave)="hover = false" routerLink="/menu-punto3">
+        <i [ngClass]="hover ? 'bi bi-arrow-left-circle-fill fs-1' : 'bi bi-arrow-left-circle fs-1'"></i>
+    </button>
+    <div class="row pt-4 justify-content-center align-items-center">
+        <div class="col-12 col-md-10 row text-center">
+            <div class="col-12 col-lg-6">
+                <img class="rounded-5 img-fluid" [src]="hangmanImages[6-try]">
+            </div>
+            <div class="col-12 col-lg-6 align-items-center justify-content-center">
+                <div class="row ">
+                    <div class="col-12 pt-3">
+                        <h2 class="text-wrap fs-1 hide-word">{{wordToGuess}}</h2>
+                    </div>
+                    <div class="col-12 pt-3">
+                        <h3>Número de Intentos: {{try}}</h3>
+                    </div>
+                    <div class="col-6 pt-3"> <button class="btn btn-letter w-100" (click)="changeWord()">Cambiar
+                            Palabra</button></div>
+                    <div class="col-6 pt-3"><button class="btn btn-letter w-100" (click)="playAgain()">Reiniciar
+                        </button></div>
+                </div>
+            </div>
+            <div class="col-2 col-md-1 pt-3" *ngFor="let letter of letters">
+                <button class="btn btn-letter" [disabled]="usedLetters.includes(letter) || gameFinished"
+                    (click)="check(letter)">{{letter}} </button>
+            </div>
+        </div>
+    </div>
+    <div #lossModal class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">¡AHORCADO!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h2>Perdiste</h2>
+                    <h3>La palabra era: {{selectedWord}}</h3>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button class="btn btn-letter" (click)="changeWord()" data-bs-dismiss="modal">Cambiar
+                        Palabra</button>
+                    <button class="btn btn-letter" (click)="playAgain()" data-bs-dismiss="modal">Reiniciar </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div #winModal class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">¡TE SALVASTE!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h2>¡Ganaste!</h2>
+                    <h3>Lo lograste en {{6-try}} intentos</h3>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button class="btn btn-letter" (click)="changeWord()" data-bs-dismiss="modal">Cambiar
+                        Palabra</button>
+                    <button class="btn btn-letter" (click)="playAgain()" data-bs-dismiss="modal">Reiniciar </button>
+                    <button class="btn btn-letter" routerLink="/menu-punto3" data-bs-dismiss="modal">Volver al
+                        menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

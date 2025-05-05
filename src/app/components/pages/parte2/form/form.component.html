@@ -1,0 +1,75 @@
+<form [formGroup]="formularioBoleto" (ngSubmit)="submit()">
+    <div class="row">
+        <div class="col-12 col-md-6 pb-3">
+            <label for="dni" class="form-label">Ingresar DNI</label>
+            <input type="text" class="form-control" id="dni" formControlName="dni"
+                [ngClass]="{'is-invalid': formularioBoleto.get('dni')?.invalid, 'is-valid': formularioBoleto.get('dni')?.valid}">
+            <div class="invalid-feedback">
+                <span *ngIf="hasErrors('dni','required')">El dni es obligatorio.</span>
+                <span *ngIf="hasErrors('dni','pattern')">El dni debe tener 7 o 8 digitos.</span>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 pb-3">
+            <label for="email" class="form-label">Ingresar Email</label>
+            <input
+                [ngClass]="{'is-invalid':formularioBoleto.get('email')?.invalid, 'is-valid': formularioBoleto.get('email')?.valid}"
+                type="email" class="form-control" id="email" formControlName="email">
+            <div class="invalid-feedback">
+                <span *ngIf="hasErrors('email','required')">El email es obligatorio.</span>
+                <span *ngIf="hasErrors('email','email')">El email debe ser válido.</span>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 pb-3">
+            <label for="touristCategory" class="form-label">Seleccionar categoria</label>
+            <select class="form-select" id="touristCategory" formControlName="touristCategory" 
+            [ngClass]="{'is-invalid': formularioBoleto.get('touristCategory')?.invalid, 
+            'is-valid':formularioBoleto.get('touristCategory')?.valid}">
+                <option value="adulto">Adulto</option>
+                <option value="menor">Menor</option>
+                <option value="jubilado">Jubilado</option>
+            </select>
+            <div class="invalid-feedback">
+                <span *ngIf="hasErrors('touristCategory','required')">La categoria es obligatoria.</span>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 pb-3">
+            <label for="destination" class="form-label">Seleccionar destino</label>
+            <select class="form-select" id="destination" formControlName="destination"
+            [ngClass]="{'is-invalid': formularioBoleto.get('destination')?.invalid, 
+            'is-valid':formularioBoleto.get('destination')?.valid}">
+                <option *ngFor="let destination of destinations" [ngValue]="destination">
+                    {{ destination.destination }} ${{destination.price}}</option>
+            </select>
+            <div class="invalid-feedback">
+                <span *ngIf="hasErrors('destination','required')">El destino es obligatorio.</span>
+            </div>
+        </div>
+        <div class="col-6 ">
+            <label
+                *ngIf="formularioBoleto.get('destination')?.valid && formularioBoleto.get('touristCategory')?.valid">
+                Precio Final:</label>
+            <div class="d-flex final-price"
+                *ngIf="formularioBoleto.get('destination')?.valid && formularioBoleto.get('touristCategory')?.valid">
+
+                <p class="align-self-center fs-5 fs-4">
+                    <span style="text-decoration: line-through;">{{formularioBoleto.get('destination')?.value.price
+                        | currency:'ARS':'symbol'}}</span>
+                    {{getTotalPrice(formularioBoleto.get('destination')?.value.price) |currency:'ARS':'symbol'}}
+                </p>
+
+                <div *ngIf="formularioBoleto.get('touristCategory')?.value === 'menor'"
+                    class="discount ms-auto align-self-center">
+                    <img class="img-fluid" src="assets/img/discounts/discount-35.png" alt="">
+                </div>
+                <div *ngIf="formularioBoleto.get('touristCategory')?.value === 'jubilado'"
+                    class="discount ms-auto align-self-center">
+                    <img class="img-fluid" src="assets/img/discounts/discount-50.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="col-6 pb-3 pt-4 align-self-center">
+            <button type="submit" class="btn btn-primary w-100">Generar Boleto</button>
+        </div>
+    </div>
+
+</form>

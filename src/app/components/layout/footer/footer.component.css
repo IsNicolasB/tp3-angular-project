@@ -1,13 +1,8 @@
 .footer {
-    position: relative;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    font-size: 1rem;
-  }
-  
-  @media (max-width: 767px) {
-    .footer .row > div {
-      font-size: 0.95rem;
-    }
-  }
+  background-color: var(--primary-color) !important;
+  position: relative;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  font-size: 1rem;
+}

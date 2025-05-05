@@ -1,0 +1,10 @@
+.discount {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.final-price {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border-radius: 10px;
+}

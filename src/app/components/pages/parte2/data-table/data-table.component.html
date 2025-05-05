@@ -1,0 +1,60 @@
+<div class="container mt-4">
+  <h2>Lista de Boletos Vendidos</h2>
+  <div class="table-responsive">
+    <table *ngIf="isBrowser" datatable [dtOptions]="dtOptions" class="row-border hover table table-striped">
+      <thead>
+        <tr>
+          <th>DNI</th>
+          <th>Email</th>
+          <th>Categoría</th>
+          <th>Destino</th>
+          <th>Precio</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ticket of tickets">
+          <td>{{ ticket.dni }}</td>
+          <td>{{ ticket.email }}</td>
+          <td>{{ ticket.touristCategory }}</td>
+          <td>{{ ticket.destination }}</td>
+          <td>{{ ticket.totalPrice | currency:'USD':'symbol':'1.2-2' }}</td>
+          <td>{{ ticket.fecha | date:'dd/MM/yyyy' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-4">
+    <h2>Resumen de Ventas</h2>
+    <div class="row">
+      <div class="col-md-6 p-3">
+        <div class="card">
+          <div class="card-header">
+            <h5>Ventas por Categoría</h5>
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let category of summary.categories | keyvalue">
+                {{ category.key }}
+                <span class="badge bg-primary rounded-pill">
+                  {{ category.value.count }} boletos - {{ category.value.total | currency:'ARS':'symbol':'1.2-2' }}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 py-3">
+        <div class="card">
+          <div class="card-header">
+            <h5>Total General</h5>
+          </div>
+          <div class="card-body">
+            <h3 class="text-center">{{ summary.total | currency:'ARS ':'symbol':'1.2-2' }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
