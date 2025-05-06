@@ -56,7 +56,27 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-success" [disabled]="cart.length === 0">Comprar</button>
+                    <button type="button" class="btn btn-success" [disabled]="cart.length === 0" (click)="realizarCompra()">Comprar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Compra Exitosa -->
+    <div #compraModal class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">¡Compra Exitosa!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                    <h3 class="mt-3">¡Gracias por tu compra!</h3>
+                    <p>Tu pedido ha sido procesado correctamente.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
                 </div>
             </div>
         </div>

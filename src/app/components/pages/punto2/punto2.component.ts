@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 
 interface Producto {
   id: number;
@@ -17,6 +17,7 @@ interface Producto {
 })
 
 export class Punto2Component {
+  @ViewChild('compraModal') compraModal!: ElementRef;
   cart: Producto[] = [];
   animatingCart = false;
 
@@ -33,11 +34,30 @@ export class Punto2Component {
 
   animateCart() {
     this.animatingCart = true;
-    setTimeout(() => this.animatingCart = false, 1000); // Duración de la animación
+    setTimeout(() => this.animatingCart = false, 1000);
   }
 
   get total(): number {
     return this.cart.reduce((acc, prod) => acc + prod.precio, 0);
+  }
+
+  realizarCompra() {
+    // Cerrar el modal del carrito usando data-bs-dismiss
+    const carritoModal = document.getElementById('carritoModal');
+    const closeButton = carritoModal?.querySelector('.btn-close');
+    if (closeButton) {
+      (closeButton as HTMLElement).click();
+    }
+
+    // compra exitosa
+    setTimeout(() => {
+      const modalElement = this.compraModal.nativeElement;
+      const modal = new (window as any).bootstrap.Modal(modalElement);
+      modal.show();
+    }, 300);
+
+    // Reiniciar el carrito
+    this.cart = [];
   }
 
   productos: Producto[] = [
