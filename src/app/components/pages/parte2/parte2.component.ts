@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormComponent } from "./form/form.component";
 import { DataTableComponent } from "./data-table/data-table.component";
 import { CommonModule } from '@angular/common';
+import { Ticket } from '../../../models/parte2/ticket';
 
 @Component({
   selector: 'app-parte2',
@@ -16,9 +17,18 @@ export class Parte2Component {
   constructor(private _router: Router){}
 
   mostrarTabla = true;
+  ticketAEditar: Ticket | null = null;
 
   reiniciarTabla() {
     this.mostrarTabla = false;
     setTimeout(() => this.mostrarTabla = true, 0); // Espera un ciclo de cambio
+  }
+
+  editarTicket(ticket: Ticket) {
+    this.ticketAEditar = ticket;
+  }
+
+  limpiarTicketAEditar() {
+    this.ticketAEditar = null;
   }
 }

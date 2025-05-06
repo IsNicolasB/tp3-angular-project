@@ -22,6 +22,9 @@
           <td>{{ ticket.totalPrice | currency:'USD':'symbol':'1.2-2' }}</td>
           <td>{{ ticket.fecha | date:'dd/MM/yyyy' }}</td>
           <td class="text-center">
+            <button class="btn btn-warning btn-sm me-2" (click)="editTicket(ticket)">
+              <i class="bi bi-pencil"></i>
+            </button>
             <button class="btn btn-danger btn-sm" (click)="deleteTicket(ticket.id)">
               <i class="bi bi-trash"></i>
             </button>

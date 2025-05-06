@@ -1,4 +1,4 @@
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject, Output, EventEmitter } from '@angular/core';
 import { Ticket } from '../../../../models/parte2/ticket';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TicketService } from '../../../../services/parte2/ticket.service';
@@ -30,6 +30,7 @@ export class DataTableComponent implements OnInit {
     categories: {}
   };
   isBrowser: boolean = false;
+  @Output() editarTicket = new EventEmitter<Ticket>();
 
   constructor(
     private _ticketService: TicketService,
@@ -90,5 +91,9 @@ export class DataTableComponent implements OnInit {
   deleteTicket(id: number): void {
     this._ticketService.deleteTicket(id);
     this.loadTickets();
+  }
+
+  editTicket(ticket: Ticket): void {
+    this.editarTicket.emit(ticket);
   }
 }

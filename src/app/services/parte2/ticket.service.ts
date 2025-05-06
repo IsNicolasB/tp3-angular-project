@@ -26,6 +26,20 @@ export class TicketService {
     return this.tickets;
   }
 
+  getTicketById(id: number): Ticket | undefined {
+    return this.tickets.find(ticket => ticket.id === id);
+  }
+
+  updateTicket(id: number, updatedTicket: Omit<Ticket, 'id'>): void {
+    const index = this.tickets.findIndex(ticket => ticket.id === id);
+    if (index !== -1) {
+      this.tickets[index] = {
+        ...updatedTicket,
+        id: id
+      };
+    }
+  }
+
   deleteTicket(id: number): void {
     this.tickets = this.tickets.filter(ticket => ticket.id !== id);
   }

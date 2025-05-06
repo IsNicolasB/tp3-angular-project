@@ -1,4 +1,4 @@
-import { Output, EventEmitter, Component } from '@angular/core';
+import { Output, EventEmitter, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TicketService } from '../../../../services/parte2/ticket.service';
 import { Ticket } from '../../../../models/parte2/ticket';
@@ -7,12 +7,19 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-form',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })
-export class FormComponent {
-  formularioBoleto : FormGroup
+export class FormComponent implements OnChanges {
+  @Input() ticketAEditar: Ticket | null = null;
+  @Output() ticketAgregado = new EventEmitter<void>();
+  @Output() edicionCompletada = new EventEmitter<void>();
+
+  formularioBoleto: FormGroup;
+  modoEdicion = false;
+
   constructor(private _formBuilder: FormBuilder, private _ticketService: TicketService){
     this.formularioBoleto = this._formBuilder.group({
       dni:["",[Validators.required, Validators.pattern("^[0-9]{7,8}$")]],
@@ -22,8 +29,23 @@ export class FormComponent {
     })
   }
 
-  //Emite evento al componente padre para que se actualice la tabla
-  @Output() ticketAgregado = new EventEmitter<void>();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['ticketAEditar']) {
+      if (this.ticketAEditar) {
+        this.modoEdicion = true;
+        const destination = this.destinations.find(d => d.destination === this.ticketAEditar?.destination);
+        this.formularioBoleto.patchValue({
+          dni: this.ticketAEditar.dni,
+          email: this.ticketAEditar.email,
+          touristCategory: this.ticketAEditar.touristCategory,
+          destination: destination
+        });
+      } else {
+        this.modoEdicion = false;
+        this.formularioBoleto.reset();
+      }
+    }
+  }
   
   hasErrors(controlName: string, errorType: string){
     return this.formularioBoleto.get(controlName)?.hasError(errorType)
@@ -31,11 +53,26 @@ export class FormComponent {
 
   submit(){
     if (this.formularioBoleto.valid) {
-      this.generateTicket()
+      if (this.modoEdicion && this.ticketAEditar) {
+        const updatedTicket = {
+          dni: this.formularioBoleto.get("dni")?.value,
+          email: this.formularioBoleto.get("email")?.value,
+          touristCategory: this.formularioBoleto.get("touristCategory")?.value,
+          destination: this.formularioBoleto.get("destination")?.value.destination,
+          fecha: new Date(),
+          totalPrice: this.getTotalPrice(this.formularioBoleto.get("destination")?.value.price)
+        };
+        this._ticketService.updateTicket(this.ticketAEditar.id, updatedTicket);
+        this.modoEdicion = false;
+        this.edicionCompletada.emit();
+      } else {
+        this.generateTicket();
+      }
+      this.ticketAgregado.emit();
+      this.formularioBoleto.reset();
     }
   }
 
-  //Genera un ticket y lo agrega al servicio
   generateTicket(){
     const ticket = {
       dni: this.formularioBoleto.get("dni")?.value,
