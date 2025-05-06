@@ -30,7 +30,9 @@ export class FormComponent {
   }
 
   submit(){
-    this.generateTicket()
+    if (this.formularioBoleto.valid) {
+      this.generateTicket()
+    }
   }
 
   //Genera un ticket y lo agrega al servicio

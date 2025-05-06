@@ -1,63 +1,53 @@
-# Tp3AngularProject
+# TP3 - Angular Project
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.9.
+## Tecnologías y APIs utilizadas
 
-## Development server
+### Angular
+- Angular 19.2.0
+- Angular Forms (Reactive Forms)
+- Angular Common
+- Angular Router
 
-To start a local development server, run:
+### Librerías de UI
+- Bootstrap 5.3.5
+- Bootstrap Icons 1.11.3
+- DataTables 2.3.0
+  - angular-datatables 19.0.0
+  - datatables.net-bs5 2.3.0
 
-```bash
-ng serve
-```
+### Otras dependencias
+- jQuery 3.7.1
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Funcionalidades implementadas
 
-## Code scaffolding
+### Parte 2 - Sistema de Tickets
+- Formulario reactivo para crear tickets con validaciones
+  - Validación de DNI (7-8 dígitos)
+  - Validación de email
+  - Selección de categoría turística
+  - Selección de destino con precios predefinidos
+  - Cálculo automático de precios con descuentos
+    - Adulto: precio normal
+    - Menor: 35% de descuento
+    - Jubilado: 50% de descuento
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Tabla de tickets con DataTables
+  - Paginación
+  - Búsqueda
+  - Ordenamiento
+  - Interfaz en español
+  - Botón de eliminación por ticket
 
-```bash
-ng generate component component-name
-```
+- Resumen de ventas
+  - Total por categoría
+    - Cantidad de boletos
+    - Monto total
+  - Total general de ventas
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-
-npm i bootstrap@5.3.5
-npm i bootstrap-icons
-npm i angular-datatables --save
+- Características técnicas
+  - Sistema de IDs incremental para tickets
+  - Manejo de estado con servicios
+  - Validaciones de formularios
+  - Formateo de fechas y moneda
+  - Diseño responsive con Bootstrap
+  - Tablas interactivas con DataTables
