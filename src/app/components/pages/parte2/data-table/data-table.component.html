@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4 pb-4">
   <h2>Lista de Boletos Vendidos</h2>
   <div class="table-responsive">
     <table *ngIf="isBrowser" datatable [dtOptions]="dtOptions" class="row-border hover table table-striped">
@@ -10,6 +10,7 @@
           <th>Destino</th>
           <th>Precio</th>
           <th>Fecha</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -20,6 +21,11 @@
           <td>{{ ticket.destination }}</td>
           <td>{{ ticket.totalPrice | currency:'USD':'symbol':'1.2-2' }}</td>
           <td>{{ ticket.fecha | date:'dd/MM/yyyy' }}</td>
+          <td class="text-center">
+            <button class="btn btn-danger btn-sm" (click)="deleteTicket(ticket.id)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

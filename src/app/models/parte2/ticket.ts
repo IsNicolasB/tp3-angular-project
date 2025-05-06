@@ -1,4 +1,5 @@
 export interface Ticket {
+    id: number;
     dni: string;
     email: string;
     touristCategory: string;

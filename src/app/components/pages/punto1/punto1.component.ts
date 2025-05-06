@@ -13,19 +13,19 @@ export class Punto1Component {
     {
       titulo: 'Central Córdoba hace historia en el Maracaná',
       noticia: 'Obtuvo su primer victoria en la copa Libertadores contra Flamengo.',
-      img: '../../../../assets/img/news/central-cordoba.jpg',
+      img: 'assets/img/news/central-cordoba.jpg',
       textColor: 'text-light'
     },
     {
       titulo: 'Super Clásico River vs Boca',
       noticia: 'Este domingo 27 de abril Boca y River se mediran en el estadio Más Monumental',
-      img: '../../../../assets/img/news/river-boca.jpg',
+      img: 'assets/img/news/river-boca.jpg',
       textColor: 'text-dark'
     },
     {
       titulo: 'Super Clásico en España, por la copa del Rey',
       noticia: 'Barcelona y Real Madrid se enfrentarán este sábado 26 de abril, en la final de la copa del Rey.',
-      img: '../../../assets/img/news/barcelona-madrid.jpg',
+      img: 'assets/img/news/barcelona-madrid.jpg',
       textColor: 'text-light'
     }
   ];

@@ -22,7 +22,7 @@ export class FormComponent {
     })
   }
 
-
+  //Emite evento al componente padre para que se actualice la tabla
   @Output() ticketAgregado = new EventEmitter<void>();
   
   hasErrors(controlName: string, errorType: string){
@@ -33,8 +33,9 @@ export class FormComponent {
     this.generateTicket()
   }
 
+  //Genera un ticket y lo agrega al servicio
   generateTicket(){
-    const ticket : Ticket = {
+    const ticket = {
       dni: this.formularioBoleto.get("dni")?.value,
       email: this.formularioBoleto.get("email")?.value,
       touristCategory: this.formularioBoleto.get("touristCategory")?.value,

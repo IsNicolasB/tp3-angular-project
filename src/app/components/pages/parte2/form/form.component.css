@@ -8,3 +8,9 @@
     color: var(--text-color);
     border-radius: 10px;
 }
+
+form{
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    padding: 20px;
+}

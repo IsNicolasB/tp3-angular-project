@@ -1,10 +1,9 @@
-import { Component, OnInit, PLATFORM_ID, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { Ticket } from '../../../../models/parte2/ticket';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TicketService } from '../../../../services/parte2/ticket.service';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
 
 interface CategorySummary {
   count: number;
@@ -23,7 +22,7 @@ interface Summary {
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.css'
 })
-export class DataTableComponent implements OnInit, OnDestroy {
+export class DataTableComponent implements OnInit {
   tickets: Ticket[] = [];
   dtOptions: any = {};
   summary: Summary = {
@@ -31,7 +30,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
     categories: {}
   };
   isBrowser: boolean = false;
-  private ticketsSub!: Subscription;
 
   constructor(
     private _ticketService: TicketService,
@@ -41,14 +39,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    /*
-    La sección con DataTable no es reactiva, por lo tanto la suscripción no le afecta.
-    Quién ocupa esta suscripción es la parte del resumen de ventas.
-    */
-    this.ticketsSub = this._ticketService.tickets$.subscribe(tickets => {
-      this.tickets = tickets;
-      this.calculateSummary();
-    });
+    this.loadTickets();
     if (this.isBrowser) {
       this.dtOptions = {
         pagingType: 'full_numbers',
@@ -71,16 +62,15 @@ export class DataTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    if (this.ticketsSub) {
-      this.ticketsSub.unsubscribe();
-    }
+  loadTickets(): void {
+    this.tickets = this._ticketService.getTickets();
+    this.calculateSummary();
   }
 
   calculateSummary(): void {
     this.summary = { 
       total: 0,
-      categories: {}// Se divide en  cantidad y total por categoría
+      categories: {}
     };
 
     this.tickets.forEach(ticket => {
@@ -95,5 +85,10 @@ export class DataTableComponent implements OnInit, OnDestroy {
       this.summary.categories[ticket.touristCategory].total += ticket.totalPrice;
       this.summary.total += ticket.totalPrice;
     });
+  }
+
+  deleteTicket(id: number): void {
+    this._ticketService.deleteTicket(id);
+    this.loadTickets();
   }
 }

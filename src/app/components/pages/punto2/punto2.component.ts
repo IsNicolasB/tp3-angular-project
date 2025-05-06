@@ -17,6 +17,29 @@ interface Producto {
 })
 
 export class Punto2Component {
+  cart: Producto[] = [];
+  animatingCart = false;
+
+  addProduct(producto: Producto) {
+    if (!this.cart.includes(producto)) {
+      this.cart.push(producto);
+      this.animateCart();
+    }
+  }
+
+  deleteProduct(id: number) {
+    this.cart = this.cart.filter( p => p.id !== id);
+  }
+
+  animateCart() {
+    this.animatingCart = true;
+    setTimeout(() => this.animatingCart = false, 1000); // Duración de la animación
+  }
+
+  get total(): number {
+    return this.cart.reduce((acc, prod) => acc + prod.precio, 0);
+  }
+
   productos: Producto[] = [
     {
       id: 1,
@@ -63,26 +86,4 @@ export class Punto2Component {
 
   ];
 
-  cart: Producto[] = [];
-  animatingCart = false;
-
-  addProduct(producto: Producto) {
-    if (!this.cart.includes(producto)) {
-      this.cart.push(producto);
-      this.animateCart();
-    }
-  }
-
-  deleteProduct(id: number) {
-    this.cart = this.cart.filter( p => p.id !== id);
-  }
-
-  animateCart() {
-    this.animatingCart = true;
-    setTimeout(() => this.animatingCart = false, 1000); // Duración de la animación
-  }
-
-  get total(): number {
-    return this.cart.reduce((acc, prod) => acc + prod.precio, 0);
-  }
 }
